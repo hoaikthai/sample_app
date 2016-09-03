@@ -10,4 +10,8 @@ class ActiveSupport::TestCase
   include ApplicationHelper
   # include ActiveRecord::Migration.maintain_test_schema!
   # Add more helper methods to be used by all tests here...
+  def is_logged_in?
+	!session[:user_id].nil?
+  end
+
 end

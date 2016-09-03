@@ -1,1 +1,4 @@
-
+hoai:
+  name: Rails Tutorial
+  email: rails@tutorial.com
+  password_digest: <%= User.digest('password') %>
