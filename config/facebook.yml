@@ -1,3 +1,0 @@
-production:
-  app_id: ENV['FACEBOOK_APP_ID']
-  secret: ENV['FACEBOOK_SECRET']
