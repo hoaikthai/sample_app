@@ -27,3 +27,5 @@ log.txt
 # Ignore uploaded test images.
 /public/uploads/
 
+# Ignore facebook.yml
+/config/facebook.yml
