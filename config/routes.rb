@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   get '/auth/facebook', as: "auth_provider"
   get '/auth/facebook/callback', to: 'users#login_with_facebook'
+  get '/auth/google_oauth2/callback', to: 'users#login_with_google'
   patch '/password_create', to: 'users#password_create'
   resources :users do
     member do

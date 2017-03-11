@@ -89,7 +89,17 @@ class User < ApplicationRecord
     facebook = Koala::Facebook::API.new(access_token)
     facebook.get_object("me?fields=name,email")
   end
-  
+
+  def self.from_omniauth auth
+    where(email: auth.info.email).first_or_initialize.tap do |user|
+      user.name = auth.info.name
+      user.email = auth.info.email
+      user.password = "foobar"
+      user.password_confirmation = "foobar"
+      user.save!
+    end
+  end
+
   private
 
     def downcase_email

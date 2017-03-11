@@ -81,6 +81,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def login_with_google
+    @user = User.from_omniauth(request.env['omniauth.auth'])
+    user = User.find_by(email: @user.email)
+    if user.activated?
+      log_in user
+      redirect_to user
+    else
+      render 'create_password'
+    end
+  end
+
   def password_create
     if params[:user][:password].empty?
       @user.errors.add(:password, "can't be empty")
