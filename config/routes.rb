@@ -1,12 +1,8 @@
 Rails.application.routes.draw do
   get 'password_resets/new'
-
   get 'password_resets/edit'
-
   get 'sessions/new'
-
   get 'users/new'
-
   root 'static_pages#home'
   get  '/help',    to: 'static_pages#help'
   get  '/about',   to: 'static_pages#about'
@@ -16,6 +12,9 @@ Rails.application.routes.draw do
   get  '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+  get '/auth/facebook', as: "auth_provider"
+  get '/auth/facebook/callback', to: 'users#login_with_facebook'
+  patch '/password_create', to: 'users#password_create'
   resources :users do
     member do
       get :following, :followers

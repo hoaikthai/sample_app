@@ -2,6 +2,8 @@ class UsersController < ApplicationController
 	before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
 	before_action :correct_user, only: [:edit, :update]
 	before_action :admin_user, only: :destroy
+  before_action :get_user, only: :password_create
+
 	def index
 		@users = User.paginate(page: params[:page])
 	end
@@ -60,10 +62,52 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
 
+  def login_with_facebook
+    @user = User.koala(request.env['omniauth.auth']['credentials'])
+    user = User.find_by(email: @user['email'])
+    if user
+      log_in user
+      if !user.activated
+        user.update_attribute(:activated, true)
+        user.update_attribute(:activated_at, Time.zone.now)
+      end
+      redirect_to user
+    else
+      @user = User.create(name: @user['name'],
+                         email: @user['email'],
+                         password: "foobar",
+                         password_confirmation: "foobar")
+      render 'create_password'
+    end
+  end
+
+  def password_create
+    if params[:user][:password].empty?
+      @user.errors.add(:password, "can't be empty")
+      render 'create_password'
+    elsif @user.update_attributes(password_params)
+      log_in @user
+      @user.update_attribute(:activated, true)
+      @user.update_attribute(:activated_at, Time.zone.now)
+      flash[:success] = "Password has been created"
+      redirect_to @user
+    else
+      render 'create_password'
+    end
+  end
+
   private
   	def user_params
   		params.require(:user).permit(:name, :email, :password, :password_confirmation)
   	end
+
+    def password_params
+      params.require(:user).permit(:password, :password_confirmation)
+    end
+
+    def get_user
+      @user = User.find_by(email: params[:email])
+    end
 
   	def correct_user
   		@user = User.find(params[:id])
