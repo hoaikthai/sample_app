@@ -21,5 +21,9 @@
     <% end %>
 
     <p>New user? <%= link_to "Sign up now!", signup_path %></p>
+    <%= link_to image_tag("facebook-login-button.png", alt: "Facebook Login",
+                        class: "fb-btn"), "/auth/facebook" %>
+    <%= link_to image_tag("google-login-button.png", alt: "Google Login",
+                        class: "gg-btn"), "/auth/google_oauth2"%>
   </div>
 </div>

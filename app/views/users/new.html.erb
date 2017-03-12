@@ -19,8 +19,9 @@
 
       <%= f.submit "Create my account", class: "btn btn-primary" %>
     <% end %>
-    <%= link_to "Facebook Login", "/auth/facebook" %>
-    <br>
-    <%= link_to "Google Login", "/auth/google_oauth2" %>
+    <%= link_to image_tag("facebook-login-button.png", alt: "Facebook Login",
+                        class: "fb-btn"), "/auth/facebook" %>
+    <%= link_to image_tag("google-login-button.png", alt: "Google Login",
+                        class: "gg-btn"), "/auth/google_oauth2"%>
   </div>
 </div>

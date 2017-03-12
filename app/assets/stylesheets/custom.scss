@@ -113,6 +113,17 @@ footer {
   @include box_sizing;
 }
 
+.fb-btn {
+  margin-top: 20px;
+  width: 49%;
+}
+
+.gg-btn {
+  margin-top: 20px;
+  float: right;
+  width: 49%
+}
+
 /* sidebar */
 
 aside {
