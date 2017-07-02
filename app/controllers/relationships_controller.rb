@@ -12,10 +12,15 @@ class RelationshipsController < ApplicationController
 
 	def destroy
 		@user = Relationship.find(params[:id]).followed
-		current_user.unfollow(@user)
-		respond_to do |format|
-			format.html { redirect_to @user }
-			format.js
+		if @user != User.first
+			current_user.unfollow(@user)
+			respond_to do |format|
+				format.html { redirect_to @user }
+				format.js
+			end
+		else
+			flash[:danger] = "Cannot unfollow this user"
+			redirect_to @user
 		end
 	end
 end
